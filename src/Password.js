@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
+import { addPassword } from './actions';
 
 class Password extends Component {
   constructor(props) {
     super(props)
     this.state = { password: 'p@ssw0rd'}
-    this.description = {description: ''}
+    this.name = {name: ''}
   }
 
   generatePassword() {
@@ -37,7 +39,7 @@ class Password extends Component {
   render() {
     return (
       <div>
-        <div>{this.state.password}</div>
+
         <div>
           <button onClick={(e) => {
             const new_password = this.generatePassword()
@@ -45,24 +47,45 @@ class Password extends Component {
             // value={this.state.password}
           }}>Generate</button>
         </div>
+
         <div>
           <input
             onChange={(e) => {this.setState({ password: e.target.value })}}
             value={this.state.password}
           />
         </div>
+
         <div>
           <input
             onChange={(e) => {
-              this.setState({ description: e.target.value })
-              console.log(this.state.description)
+              this.setState({ name: e.target.value })
+              console.log(this.state.name)
             }}
-            value={this.state.description}
+            value={this.state.name}
           />
         </div>
+
+        <div>
+          <button onClick={(e) => {
+            this.props.addPassword(this.state.name, this.state.password)
+          }}>Save</button>
+        </div>
+
       </div>
     )
   }
 }
 
-export default Password
+const mapStateToProps = (state) => {
+  return {
+
+  }
+}
+
+const mapDispatchToProps = () => {
+  return {
+    addPassword
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps())(Password)
